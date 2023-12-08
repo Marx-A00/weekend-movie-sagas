@@ -1,9 +1,14 @@
 import React, { useEffect } from 'react';
+import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import './MovieList.css'
 
 function MovieList() {
 
+  const navigateToMovieDetails=()=>{
+    history.push('/Details');
+  }
+  const history = useHistory();
   const dispatch = useDispatch();
   const movies = useSelector(store => store.movies);
 
@@ -19,7 +24,7 @@ function MovieList() {
           return (
             <div data-testid='movieItem' key={movie.id}>
               <h3>{movie.title}</h3>
-              <img src={movie.poster} alt={movie.title}/>
+              <img onClick={navigateToMovieDetails} src={movie.poster} alt={movie.title}/>
             </div>
           );
         })}
