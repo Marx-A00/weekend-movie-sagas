@@ -5,8 +5,14 @@ import './MovieList.css'
 
 function MovieList() {
 
-  const navigateToMovieDetails=()=>{
-    history.push('/Details');
+  const navigateToMovieDetails=(movieTitle,movieImage)=>{
+    // when I call this function, I want to basically dispatch set movie details 
+    // and then just grab that with a selector in details
+
+    console.log("title:",movieTitle);
+    console.log("image:",movieImage);
+
+    // history.push('/Details');
   }
   
   const history = useHistory();
@@ -16,6 +22,7 @@ function MovieList() {
   const movies = useSelector(store => store.movies);
   const genres = useSelector(store => store.genres);
 
+  // for displaying all movies and getting all genres on page load
   useEffect(() => {
     getAllMovies();
     getAllGenres();
@@ -43,7 +50,7 @@ function MovieList() {
               <h3>{movie.title}</h3>
               <img
               data-testid="toDetails"
-              onClick={navigateToMovieDetails}
+              onClick={()=> navigateToMovieDetails(movie.poster,movie.title)}
                src={movie.poster}
                alt={movie.title}/>
             </div>

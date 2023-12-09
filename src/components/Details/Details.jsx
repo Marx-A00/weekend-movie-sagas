@@ -1,10 +1,16 @@
 import { useHistory } from "react-router-dom"
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
 export default function Details(){
 
     // some state
     // hold it here 
 
+
+    // const details = useSelector(store => store.details);
+
+
+    
     // when I tap into a movie, I should make a get request, where I specifically
     //query for the movie X genre 
     const dispatch = useDispatch();
