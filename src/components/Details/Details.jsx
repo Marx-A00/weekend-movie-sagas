@@ -7,7 +7,8 @@ export default function Details(){
     // hold it here 
 
 
-    // const details = useSelector(store => store.details);
+    const details = useSelector(store => store.details);
+    console.log("details",Object.values(details));
 
 
     
@@ -30,6 +31,8 @@ export default function Details(){
     return(
         <div data-testid="movieDetails">
         <h1>Movie Title: </h1>
+        {details}
+
         <button
         data-testid="toList"
         onClick={goHome}

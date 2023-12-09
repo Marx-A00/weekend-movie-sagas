@@ -13,9 +13,36 @@ router.get('/', (req, res) => {
     })
     .catch(err => {
       console.log('ERROR: Get all movies', err);
-      res.sendStatus(500)
+      res.sendStatus(500);
     })
 });
+
+router.get('/:id',(req,res)=>{
+  const idOfMovieDetails = req.params.id;
+  const query = 
+
+  `
+  SELECT "genres"."name" as "movie_genre"
+	  FROM "movies_genres"
+	  INNER JOIN "movies"
+	  ON "movies_genres"."movie_id" = "movies"."id"
+	  INNER JOIN "genres"
+	  ON "movies_genres"."genre_id" = "genres"."id"
+	  WHERE "movies"."id" = ${idOfMovieDetails};
+  `
+
+  pool.query(query)
+  .then(result =>{
+    console.log(result.rows);
+
+    res.send (result.rows)
+
+  })
+  .catch(err => {
+    console.log('Get movie by id', err);
+    res.sendStatus(500);
+  })
+})
 
 router.post('/', (req, res) => {
   console.log(req.body);

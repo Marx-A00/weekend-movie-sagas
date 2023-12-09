@@ -5,14 +5,23 @@ import './MovieList.css'
 
 function MovieList() {
 
-  const navigateToMovieDetails=(movieTitle,movieImage)=>{
+  const navigateToMovieDetails=(movieTitle,movieImage,id)=>{
     // when I call this function, I want to basically dispatch set movie details 
     // and then just grab that with a selector in details
 
-    console.log("title:",movieTitle);
-    console.log("image:",movieImage);
+  
 
-    // history.push('/Details');
+    dispatch({
+      type: "SAGA/FETCH_MOVIE_DETAILS",
+      payload: movieTitle,movieImage,id
+    })
+
+    dispatch({
+      type: "SET_MOVIE_TITLE",
+      payload: movieTitle
+    })
+
+    history.push('/Details');
   }
   
   const history = useHistory();
@@ -25,7 +34,6 @@ function MovieList() {
   // for displaying all movies and getting all genres on page load
   useEffect(() => {
     getAllMovies();
-    getAllGenres();
 
   }, []);
   const getAllMovies = () =>{
@@ -34,11 +42,11 @@ function MovieList() {
        });
   };
 
-  const getAllGenres = ()=>{
-    dispatch({
-      type: 'FETCH_GENRES'
-    });
-  };
+  // const getAllGenres = ()=>{
+  //   dispatch({
+  //     type: 'FETCH_GENRES'
+  //   });
+  // };
 
   return (
     <main>
@@ -50,7 +58,7 @@ function MovieList() {
               <h3>{movie.title}</h3>
               <img
               data-testid="toDetails"
-              onClick={()=> navigateToMovieDetails(movie.poster,movie.title)}
+              onClick={()=> navigateToMovieDetails(movie.poster,movie.title,movie.id)}
                src={movie.poster}
                alt={movie.title}/>
             </div>

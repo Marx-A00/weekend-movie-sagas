@@ -7,9 +7,8 @@ import axios from "axios";
 // Create the rootSaga generator function
 function* rootSaga() {
   yield takeEvery("FETCH_MOVIES", fetchAllMovies);
-  yield takeEvery("FETCH_GENRES", fetchAllGenres);
-  //uncomment once details is ready
-  // yield takeEvery("SAGA/FETCH_MOVIE_DETAILS",fetchMovieDetails);
+  // yield takeEvery("FETCH_GENRES", fetchAllGenres);
+  yield takeEvery("SAGA/FETCH_MOVIE_DETAILS",fetchMovieDetails);
 }
 
 // SAGA FETCH FUNCTIONS------------------------------------------------------------
@@ -17,35 +16,39 @@ function* rootSaga() {
 
 // Need to make this get genre somehow
 // probably server side when you send that hoe back or maybe even here
-// write it in selecta 
+// write it in select
 
-// function* fetchMovieDetails(){
-//   try{
-//     const movieDetailsResponse = yield axios.get('/api/movies');
-//     console.log(movieDetailsResponse);
+function* fetchMovieDetails(action){
+  console.log(action.id);
+  try{
+    const movieDetailsResponse = yield axios.get(`/api/movies/${action.id}`);
 
-//     yield put({
-//       type:'SET_MOVIES',
-//       payload: movieDetailsResponse.data
-//     })
-//   }
-//   catch(error){
-//     console.log('fetchMovieDetails error:', error)
-//   }
-// }
-
-function* fetchAllGenres() {
-  try {
-    const genreResponse = yield axios.get("/api/genres");
+    console.log(movieDetailsResponse);
 
     yield put({
       type: "SET_GENRES",
-      payload: genreResponse.data,
-    });
-  } catch (error) {
-    console.log("fetchAllGenres", error);
+      payload: movieDetailsResponse.data
+      
+    })
+  }
+
+  catch(error){
+    console.log('fetchMovieDetails error:', error)
   }
 }
+
+// function* fetchAllGenres() {
+//   try {
+//     const genreResponse = yield axios.get("/api/genres");
+
+//     yield put({
+//       type: "SET_GENRES",
+//       payload: genreResponse.data,
+//     });
+//   } catch (error) {
+//     console.log("fetchAllGenres", error);
+//   }
+// }
 
 function* fetchAllMovies() {
   try {
@@ -85,12 +88,23 @@ const genres = (state = [], action) => {
       return state;
   }
 };
-const details = (state = {}, action) => {
+
+// 
+//{movie.title
+//movie.poster
+//movie.description
+// movie.genres : [] }
+
+const details = (state = [], action) => {
   switch (action.type) {
-    case "SET_MOVIE_DETAILS":
+
+    case "SET_MOVIE_TITLE":
       return action.payload;
-  }
+     case "SET_MOVIE_DETAILS":
+      return [...state,action.payload];
+      default:
   return state;
+  }
 };
 
 // Create one store that all components can use
@@ -98,9 +112,7 @@ const storeInstance = createStore(
   combineReducers({
     movies,
     genres,
-
-    // details,
-    // uncomment this once details is made
+    details,
   }),
   // Add sagaMiddleware to our store
   applyMiddleware(sagaMiddleware, logger)
