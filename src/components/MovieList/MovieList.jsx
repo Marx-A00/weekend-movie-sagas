@@ -8,13 +8,30 @@ function MovieList() {
   const navigateToMovieDetails=()=>{
     history.push('/Details');
   }
+  
   const history = useHistory();
   const dispatch = useDispatch();
+  
+  // SELECTORS
   const movies = useSelector(store => store.movies);
+  const genres = useSelector(store => store.genres);
 
   useEffect(() => {
-    dispatch({ type: 'FETCH_MOVIES' });
+    getAllMovies();
+    getAllGenres();
+
   }, []);
+  const getAllMovies = () =>{
+    dispatch({
+       type: 'FETCH_MOVIES'
+       });
+  };
+
+  const getAllGenres = ()=>{
+    dispatch({
+      type: 'FETCH_GENRES'
+    });
+  };
 
   return (
     <main>
