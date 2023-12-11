@@ -45,7 +45,7 @@ describe('Movies Saga', () => {
 
     cy.contains(/Beast/i)
     cy.contains(/Condon/i)
-    cy.get("[data-testid='movieDetail']").find('img').should('have.attr', 'src', 'images/beauty-and-the-beast.jpg')
+    cy.get("[data-testid='movieDetails']").find('img').should('have.attr', 'src', 'images/beauty-and-the-beast.jpg')
 
 
   })

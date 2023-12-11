@@ -5,7 +5,7 @@ import './MovieList.css'
 
 function MovieList() {
 
-  const navigateToMovieDetails=(movieTitle,movieImage,id)=>{
+  const navigateToMovieDetails=(movieTitle,movieImage,id,movieDescription)=>{
     // when I call this function, I want to basically dispatch set movie details 
     // and then just grab that with a selector in details
 
@@ -18,7 +18,7 @@ function MovieList() {
 
     dispatch({
       type: "SET_MOVIE_TITLE",
-      payload: movieTitle
+      payload: {movieTitle,movieImage,movieDescription}
     })
 
     history.push('/Details');
@@ -58,7 +58,8 @@ function MovieList() {
               <h3>{movie.title}</h3>
               <img
               data-testid="toDetails"
-              onClick={()=> navigateToMovieDetails(movie.poster,movie.title,movie.id)}
+              onClick={()=>
+              navigateToMovieDetails(movie.title,movie.poster,movie.id,movie.description)}
                src={movie.poster}
                alt={movie.title}/>
             </div>

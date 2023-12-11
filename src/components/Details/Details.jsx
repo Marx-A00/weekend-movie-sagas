@@ -8,6 +8,7 @@ export default function Details(){
 
 
     const details = useSelector(store => store.details);
+    const genres = useSelector(store => store.genres);
     console.log("details",Object.values(details));
 
 
@@ -30,8 +31,22 @@ export default function Details(){
 
     return(
         <div data-testid="movieDetails">
+
         <h1>Movie Title: </h1>
-        {details}
+
+        <p>{details.movieTitle}</p>
+        <img
+        src={details.movieImage}></img>
+        <h1>Description</h1>
+
+        <p>{details.movieDescription}</p>
+        <h1>Genres:</h1>
+        {genres.map(genre =>{
+            return(
+                <p>{genre.movie_genre}</p>
+            )
+        })}
+
 
         <button
         data-testid="toList"

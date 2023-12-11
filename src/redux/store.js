@@ -95,11 +95,11 @@ const genres = (state = [], action) => {
 //movie.description
 // movie.genres : [] }
 
-const details = (state = [], action) => {
+const details = (state = {}, action) => {
   switch (action.type) {
 
     case "SET_MOVIE_TITLE":
-      return action.payload;
+      return {...state,...action.payload};
      case "SET_MOVIE_DETAILS":
       return [...state,action.payload];
       default:
